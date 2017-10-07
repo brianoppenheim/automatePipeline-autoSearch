@@ -12,12 +12,16 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import javax.swing.ProgressMonitor;
 
+import org.xml.sax.SAXException;
+
 import modules.Params;
 
 /**
  * This class takes handles clients. Once
  * a client is passed to it, it determines
  * what to do with incoming messages.
+ * 
+ * @authors jbelmont, njooma
  */
 public class AUClientThread extends Thread {
 
@@ -58,6 +62,7 @@ public class AUClientThread extends Thread {
 	        	String sequestPathString = in.readUTF();
 	        	System.out.println("In path: "+sequestPathString);
 	        	Path sequestPath = Paths.get(_params.getGlobalParam("SEQUEST.BaseFolder", "C:\\sequest"), sequestPathString);
+	        	System.out.println("sequestPath: " + sequestPath.toString());
 	        	Files.createDirectories(sequestPath);
 	        	//Read number of files
 		        int numFiles = in.readInt();
@@ -103,9 +108,12 @@ public class AUClientThread extends Thread {
 	        in.close();
 	        out.close();
 	        _clientSocket.close();
-		} catch (IOException | NullPointerException e) {
+		} catch (IOException | NullPointerException | InterruptedException e) {
 			e.printStackTrace();
 			tempBusy = false;
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
