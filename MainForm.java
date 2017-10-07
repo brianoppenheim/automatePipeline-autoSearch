@@ -1251,21 +1251,6 @@ public class MainForm extends JFrame implements Form {
 					"C:" + _sep + "autoSearch" + _sep + "MaxQuant" + _sep + "bin" + _sep + "MaxQuantCmd.exe");
 			Runtime rt = Runtime.getRuntime();
 			final Process pr = rt.exec(pathToMaxQuantProgram + " " + directory + _sep + "mqpar.xml");
-			BufferedReader bri = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-			BufferedReader bre = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
-			BufferedWriter inputStreamOut = new BufferedWriter(new FileWriter(new File("C:\\Desktop\\inputStreamOut.txt")));
-			BufferedWriter outputStreamOut = new BufferedWriter(new FileWriter(new File("C:\\Desktop\\outputStreamOut.txt")));
-			String line;
-			while ((line = bri.readLine()) != null) {
-				inputStreamOut.write(line);
-			}
-			bri.close();
-			inputStreamOut.close();
-			while ((line = bre.readLine()) != null) {
-				System.err.println(line);
-			}
-			bre.close();
-			outputStreamOut.close();
 			// FEATURE REQUEST Take output of MaxQuantCmd and relay to text
 			// file.
 			// We will run the thread and wait for completion
